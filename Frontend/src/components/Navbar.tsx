@@ -9,9 +9,7 @@ import { navLinks } from "../constants/Navlinks";
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
-
     const scrolled = useScroll({ threshold: 50 });
-
     const pathname = useLocation({
         select: (location) => location.pathname,
     });
@@ -130,7 +128,7 @@ export default function Navbar() {
                         {/* Mobile Menu */}
                         <button
                             onClick={() => setMenuOpen(true)}
-                            className="rounded-full p-1 transition-colors hover:bg-gray-100 md:hidden"
+                            className="rounded-full p-1 transition-colors hover:bg-gray-100 md:hidden cursor-pointer"
                         >
                             <img
                                 src={assets.menu_icon}
@@ -171,7 +169,6 @@ export default function Navbar() {
                     </button>
                 </div>
             </div>
-
 
             {/* Mobile Sidebar */}
             <div
