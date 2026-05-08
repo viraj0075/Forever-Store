@@ -4,7 +4,6 @@ import LatestCollection from "../components/LatestCollection";
 import BestSeller from "../components/BestSeller";
 import OurPolicy from "../components/OurPolicy";
 import Subscribe from "../components/Subscribe";
-import Footer from "../components/Footer";
 
 export const Route = createFileRoute("/")({
   component: () => (
@@ -14,7 +13,6 @@ export const Route = createFileRoute("/")({
       <BestSeller />
       <OurPolicy />
       <Subscribe />
-      <Footer />
     </div>
   ),
 });
