@@ -80,8 +80,8 @@ export default function Navbar() {
                     <div className="flex items-center gap-5 md:gap-8">
                         {/* Search */}
                         <button
-                            onClick={() => setSearchOpen(true)}
-                            className="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-200"
+                            onClick={() => setSearchOpen(!searchOpen)}
+                            className="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-200 "
                         >
                             <img
                                 src={assets.search_icon}
@@ -160,12 +160,12 @@ export default function Navbar() {
 
             {/* Search Overlay */}
             <div
-                className={`absolute top-full inset-x-0 z-40 overflow-hidden border-b border-gray-200 bg-white transition-all duration-300 ${searchOpen
+                className={`absolute top-full inset-x-0 z-40 overflow-hidden border-b border-gray-200 bg-white/95 backdrop-blur-md transition-all duration-300  ${searchOpen
                     ? "h-20 py-4 opacity-100"
                     : "pointer-events-none h-0 opacity-0"
                     }`}
             >
-                <div className="px-4 sm:px-6 lg:px-8">
+                <div className="px-4 sm:px-6 lg:px-8 ">
                     <div className="flex items-center justify-center gap-3">
                         <div className="flex w-full max-w-2xl items-center rounded-full border border-gray-300 bg-gray-50 px-5 py-2.5 transition-all focus-within:bg-white focus-within:ring-2 focus-within:ring-gray-200">
                             <img

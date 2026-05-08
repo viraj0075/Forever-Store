@@ -10,11 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as ProductRouteImport } from './routes/product'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CollectionRouteImport } from './routes/collection'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -32,11 +30,6 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductRoute = ProductRouteImport.update({
-  id: '/product',
-  path: '/product',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const OrderRoute = OrderRouteImport.update({
   id: '/order',
   path: '/order',
@@ -50,11 +43,6 @@ const LoginRoute = LoginRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CollectionRoute = CollectionRouteImport.update({
-  id: '/collection',
-  path: '/collection',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -78,9 +66,9 @@ const YoutubeIndexRoute = YoutubeIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductIndexRoute = ProductIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProductRoute,
+  id: '/product/',
+  path: '/product/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
   id: '/posts/',
@@ -88,9 +76,9 @@ const PostsIndexRoute = PostsIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductProductidRoute = ProductProductidRouteImport.update({
-  id: '/$productid',
-  path: '/$productid',
-  getParentRoute: () => ProductRoute,
+  id: '/product/$productid',
+  path: '/product/$productid',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PostsPostidRoute = PostsPostidRouteImport.update({
   id: '/posts/$postid',
@@ -117,11 +105,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
-  '/collection': typeof CollectionRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
-  '/product': typeof ProductRouteWithChildren
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
   '/posts/$postid': typeof PostsPostidRoute
@@ -136,7 +122,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
-  '/collection': typeof CollectionRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
@@ -154,11 +139,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
-  '/collection': typeof CollectionRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
-  '/product': typeof ProductRouteWithChildren
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
   '/posts/$postid': typeof PostsPostidRoute
@@ -175,11 +158,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/cart'
-    | '/collection'
     | '/contact'
     | '/login'
     | '/order'
-    | '/product'
     | '/signup'
     | '/youtube/profile'
     | '/posts/$postid'
@@ -194,7 +175,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/cart'
-    | '/collection'
     | '/contact'
     | '/login'
     | '/order'
@@ -211,11 +191,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/cart'
-    | '/collection'
     | '/contact'
     | '/login'
     | '/order'
-    | '/product'
     | '/signup'
     | '/youtube/profile'
     | '/posts/$postid'
@@ -231,15 +209,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CartRoute: typeof CartRoute
-  CollectionRoute: typeof CollectionRoute
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
-  ProductRoute: typeof ProductRouteWithChildren
   SignupRoute: typeof SignupRoute
   YoutubeProfileRouteRoute: typeof YoutubeProfileRouteRouteWithChildren
   PostsPostidRoute: typeof PostsPostidRoute
+  ProductProductidRoute: typeof ProductProductidRoute
   PostsIndexRoute: typeof PostsIndexRoute
+  ProductIndexRoute: typeof ProductIndexRoute
   YoutubeIndexRoute: typeof YoutubeIndexRoute
 }
 
@@ -250,13 +228,6 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/product': {
-      id: '/product'
-      path: '/product'
-      fullPath: '/product'
-      preLoaderRoute: typeof ProductRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order': {
@@ -278,13 +249,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/collection': {
-      id: '/collection'
-      path: '/collection'
-      fullPath: '/collection'
-      preLoaderRoute: typeof CollectionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -317,10 +281,10 @@ declare module '@tanstack/react-router' {
     }
     '/product/': {
       id: '/product/'
-      path: '/'
+      path: '/product'
       fullPath: '/product/'
       preLoaderRoute: typeof ProductIndexRouteImport
-      parentRoute: typeof ProductRoute
+      parentRoute: typeof rootRouteImport
     }
     '/posts/': {
       id: '/posts/'
@@ -331,10 +295,10 @@ declare module '@tanstack/react-router' {
     }
     '/product/$productid': {
       id: '/product/$productid'
-      path: '/$productid'
+      path: '/product/$productid'
       fullPath: '/product/$productid'
       preLoaderRoute: typeof ProductProductidRouteImport
-      parentRoute: typeof ProductRoute
+      parentRoute: typeof rootRouteImport
     }
     '/posts/$postid': {
       id: '/posts/$postid'
@@ -367,19 +331,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ProductRouteChildren {
-  ProductProductidRoute: typeof ProductProductidRoute
-  ProductIndexRoute: typeof ProductIndexRoute
-}
-
-const ProductRouteChildren: ProductRouteChildren = {
-  ProductProductidRoute: ProductProductidRoute,
-  ProductIndexRoute: ProductIndexRoute,
-}
-
-const ProductRouteWithChildren =
-  ProductRoute._addFileChildren(ProductRouteChildren)
-
 interface YoutubeProfileRouteRouteChildren {
   YoutubeProfileVirajRoute: typeof YoutubeProfileVirajRoute
   YoutubeProfileIndexRoute: typeof YoutubeProfileIndexRoute
@@ -397,15 +348,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CartRoute: CartRoute,
-  CollectionRoute: CollectionRoute,
   ContactRoute: ContactRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
-  ProductRoute: ProductRouteWithChildren,
   SignupRoute: SignupRoute,
   YoutubeProfileRouteRoute: YoutubeProfileRouteRouteWithChildren,
   PostsPostidRoute: PostsPostidRoute,
+  ProductProductidRoute: ProductProductidRoute,
   PostsIndexRoute: PostsIndexRoute,
+  ProductIndexRoute: ProductIndexRoute,
   YoutubeIndexRoute: YoutubeIndexRoute,
 }
 export const routeTree = rootRouteImport

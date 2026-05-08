@@ -4,6 +4,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import ShopContextProvider from "./context/ShopContext";
 

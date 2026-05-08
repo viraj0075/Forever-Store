@@ -9,10 +9,14 @@ const ProductCard = ({ id, name, image, price }: ProductCardType) => {
     return (
         <Link to="/product/$productid" params={{ productid: id }} className="text-gray-700 cursor-pointer">
             <div className="overflow-hidden">
-                <img 
-                    src={image[0]} 
-                    alt={name} 
-                    className="hover:scale-110 transition ease-in-out duration-300" 
+                <img
+                    src={image[0]}
+                    alt={name}
+                    loading="lazy"
+                    fetchPriority="auto"
+                    width={274}
+                    height={316}
+                    className="hover:scale-110 transition ease-in-out duration-300"
                 />
             </div>
             <p className="pt-3 pb-1 text-sm">{name}</p>

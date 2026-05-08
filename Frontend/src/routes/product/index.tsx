@@ -1,9 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
+import ProductWithFilter from '../../components/ProductWithFilter'
 
 export const Route = createFileRoute('/product/')({
-  component: RouteComponent,
+  component: Product,
 })
 
-function RouteComponent() {
-  return <div>Hello "/product/"!</div>
+function Product() {
+  return <ProductWithFilter />
 }
