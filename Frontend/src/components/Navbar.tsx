@@ -161,7 +161,7 @@ export default function Navbar() {
             {/* Search Overlay */}
             <div
                 className={`absolute top-full inset-x-0 z-40 overflow-hidden border-b border-gray-200 bg-white transition-all duration-300 ${searchOpen
-                    ? "h-24 py-5 opacity-100"
+                    ? "h-20 py-4 opacity-100"
                     : "pointer-events-none h-0 opacity-0"
                     }`}
             >
