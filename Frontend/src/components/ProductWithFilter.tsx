@@ -8,7 +8,7 @@ import ContainerLayout from '../layouts/ContainerLayout';
 import { assets } from '../assets/frontend_assets/assets';
 
 const ProductWithFilter = () => {
-    const { products } = useContext(ShopContext)!;
+    const { products, search, showSearch } = useContext(ShopContext)!;
 
     const [showFilter, setShowFilter] = useState(false);
     const [filterProducts, setFilterProducts] = useState<ProductType[]>([]);
@@ -35,6 +35,10 @@ const ProductWithFilter = () => {
 
     const applyFilter = () => {
         let productsCopy = products.slice();
+
+        if (showSearch && search) {
+            productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+        }
 
         if (category.length > 0) {
             productsCopy = productsCopy.filter(item => category.includes(item.category));
@@ -65,7 +69,7 @@ const ProductWithFilter = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [category, subCategory, products]);
+    }, [category, subCategory, products, search, showSearch]);
 
     useEffect(() => {
         sortProduct();

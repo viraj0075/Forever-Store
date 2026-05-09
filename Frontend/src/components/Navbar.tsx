@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../layouts/ContainerLayout";
 import { assets } from "../assets/frontend_assets/assets";
@@ -6,14 +6,16 @@ import { useScroll } from "../hooks/use-scroll";
 import { HiX, HiChevronLeft } from "react-icons/hi";
 import { navLinks } from "../constants/Navlinks";
 import { useWindow } from "../hooks/useWindow";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
-
+    const { showSearch, setShowSearch } = useContext(ShopContext)!;
+    const navigate = useNavigate();
     const scrolled = useScroll({ threshold: 50 });
     const width = useWindow();
-
     const pathname = useLocation({
         select: (location) => location.pathname,
     });
@@ -80,7 +82,14 @@ export default function Navbar() {
                     <div className="flex items-center gap-5 md:gap-8">
                         {/* Search */}
                         <button
-                            onClick={() => setSearchOpen(!searchOpen)}
+                            onClick={() => {
+                                if (pathname.includes("product")) {
+                                    setShowSearch(!showSearch);
+                                } else {
+                                    navigate({ to: "/product" });
+                                    setShowSearch(true);
+                                }
+                            }}
                             className="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-200 "
                         >
                             <img
@@ -93,8 +102,8 @@ export default function Navbar() {
                         {/* Profile */}
                         <div className="group relative z-40">
                             <button
-                                onClick={() => setSearchOpen(false)}
-                                onMouseEnter={() => setSearchOpen(false)}
+                                onClick={() => setShowSearch(false)}
+                                onMouseEnter={() => setShowSearch(false)}
                                 className="cursor-pointer rounded-full p-1 transition-colors hover:bg-gray-200"
                             >
                                 <img
@@ -157,9 +166,10 @@ export default function Navbar() {
                     </div>
                 </div>
             </ContainerLayout>
+            <SearchBar />
 
             {/* Search Overlay */}
-            <div
+            {/* <div
                 className={`absolute top-full inset-x-0 z-40 overflow-hidden border-b border-gray-200 bg-white/95 backdrop-blur-md transition-all duration-300  ${searchOpen
                     ? "h-20 py-4 opacity-100"
                     : "pointer-events-none h-0 opacity-0"
@@ -190,7 +200,7 @@ export default function Navbar() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Mobile Sidebar */}
             <div
