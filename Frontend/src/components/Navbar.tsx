@@ -12,7 +12,7 @@ import SearchBar from "./SearchBar";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { showSearch, setShowSearch } = useContext(ShopContext)!;
+    const { showSearch, setShowSearch, getTotalCartCount } = useContext(ShopContext)!;
     const navigate = useNavigate();
     const scrolled = useScroll({ threshold: 50 });
     const width = useWindow();
@@ -148,7 +148,7 @@ export default function Navbar() {
                             />
 
                             <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-bold text-white ring-2 ring-white">
-                                0
+                                {getTotalCartCount()}
                             </span>
                         </Link>
 

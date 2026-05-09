@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as PlaceOrderRouteImport } from './routes/place-order'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -28,6 +29,11 @@ import { Route as YoutubeProfileVirajRouteImport } from './routes/youtube/profil
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaceOrderRoute = PlaceOrderRouteImport.update({
+  id: '/place-order',
+  path: '/place-order',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderRoute = OrderRouteImport.update({
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
   '/posts/$postid': typeof PostsPostidRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
   '/posts/$postid': typeof PostsPostidRoute
   '/product/$productid': typeof ProductProductidRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
   '/posts/$postid': typeof PostsPostidRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/order'
+    | '/place-order'
     | '/signup'
     | '/youtube/profile'
     | '/posts/$postid'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/order'
+    | '/place-order'
     | '/signup'
     | '/posts/$postid'
     | '/product/$productid'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/order'
+    | '/place-order'
     | '/signup'
     | '/youtube/profile'
     | '/posts/$postid'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
+  PlaceOrderRoute: typeof PlaceOrderRoute
   SignupRoute: typeof SignupRoute
   YoutubeProfileRouteRoute: typeof YoutubeProfileRouteRouteWithChildren
   PostsPostidRoute: typeof PostsPostidRoute
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/place-order': {
+      id: '/place-order'
+      path: '/place-order'
+      fullPath: '/place-order'
+      preLoaderRoute: typeof PlaceOrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order': {
@@ -351,6 +371,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
+  PlaceOrderRoute: PlaceOrderRoute,
   SignupRoute: SignupRoute,
   YoutubeProfileRouteRoute: YoutubeProfileRouteRouteWithChildren,
   PostsPostidRoute: PostsPostidRoute,

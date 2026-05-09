@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
 import { HiX } from "react-icons/hi";
 import { useLocation } from "@tanstack/react-router";
+import { ShopContext } from "../context/ShopContext";
 
 const SearchBar = () => {
 
-    const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext);
+    const context = useContext(ShopContext);
+    if (!context) return null;
+    const { search, setSearch, showSearch, setShowSearch } = context;
     const [visible, setVisible] = useState(false);
     const location = useLocation();
 
@@ -22,9 +24,8 @@ const SearchBar = () => {
 
     return (
         <div
-            className={`transition-all duration-500 ease-in-out overflow-hidden bg-white/70 backdrop-blur-md text-center shadow-sm ${
-                showSearch && visible ? 'max-h-24 opacity-100 py-4' : 'max-h-0 opacity-0 py-0'
-            }`}
+            className={`transition-all duration-500 ease-in-out overflow-hidden bg-white/70 backdrop-blur-md text-center shadow-sm flex items-center justify-center ${showSearch && visible ? 'max-h-24 opacity-100 py-4' : 'max-h-0 opacity-0 py-0'
+                }`}
         >
             <div className="inline-flex items-center justify-center bg-gray-200/50 px-5 py-2 mx-3 rounded-full w-3/4 sm:w-1/2 focus-within:bg-white focus-within:ring-2 focus-within:ring-gray-200 transition-all duration-300">
                 <input

@@ -20,11 +20,11 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ShopContextProvider>
+    <ShopContextProvider>
+      <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      </ShopContextProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </ShopContextProvider>
   </StrictMode>
 );
 

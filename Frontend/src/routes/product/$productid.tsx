@@ -1,9 +1,11 @@
 import { useParams, createFileRoute } from '@tanstack/react-router'
 import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { ShopContext } from '../../context/ShopContext';
 import { assets } from '../../assets/frontend_assets/assets';
 import RelatedProducts from '../../components/RelatedProducts';
 import ContainerLayout from '../../layouts/ContainerLayout';
+import ProductDescriptionAndReviews from '../../components/ProductDescriptionAndReviews';
 import type { ProductType } from '../../Types/ProductType';
 
 export const Route = createFileRoute('/product/$productid')({
@@ -12,10 +14,10 @@ export const Route = createFileRoute('/product/$productid')({
 
 function Product() {
   const { productid } = useParams({ from: '/product/$productid' });
-  const { products, currency } = useContext(ShopContext)!;
+  const { products, currency, addToCart } = useContext(ShopContext)!;
   const [productData, setProductData] = useState<ProductType | null>(null);
   const [image, setImage] = useState('');
-  const [size, setSize] = useState<string>(products[0].sizes[0]);
+  const [size, setSize] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'description' | 'reviews'>('description');
 
   const fetchProductData = async () => {
@@ -38,7 +40,6 @@ function Product() {
         <div className='flex gap-6 sm:gap-12 flex-col sm:flex-row'>
 
           {/* Product Images */}
-          {/* Product Images */}
           <div className="flex flex-col-reverse sm:flex-row gap-4 flex-1">
             {/* Thumbnail Column */}
             <div className="flex sm:flex-col gap-3 sm:w-24 w-full overflow-x-auto sm:overflow-visible scrollbar-hide">
@@ -48,8 +49,8 @@ function Product() {
                   type="button"
                   onClick={() => setImage(item)}
                   className={`shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border-2 transition-all duration-300 ${image === item
-                      ? "border-black shadow-md"
-                      : "border-gray-200 hover:border-gray-400"
+                    ? "border-black shadow-md"
+                    : "border-gray-200 hover:border-gray-400"
                     }`}
                 >
                   <img
@@ -81,7 +82,10 @@ function Product() {
                 ))}
                 <img src={assets.star_dull_icon} alt="Star icon" className="w-3 sm:w-3.5" loading='lazy' />
               </div>
-              <p className='pl-2 text-xs sm:text-sm text-gray-500 cursor-pointer hover:text-black transition-colors' onClick={() => setActiveTab('reviews')}>(122 reviews)</p>
+              <p className='pl-2 text-xs sm:text-sm text-gray-500 cursor-pointer hover:text-black transition-colors' onClick={() => {
+                setActiveTab('reviews');
+                document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}>(122 reviews)</p>
             </div>
             <p className='mt-4 sm:mt-6 text-3xl sm:text-4xl font-extrabold text-gray-900'>{currency}{productData.price}</p>
             <p className='mt-4 sm:mt-6 text-sm sm:text-base text-gray-600 md:w-4/5 leading-relaxed'>{productData.description}</p>
@@ -104,7 +108,15 @@ function Product() {
               </div>
             </div>
 
-            <button className='w-full sm:w-auto bg-black text-white px-12 py-4 text-xs sm:text-sm font-bold active:bg-gray-800 transition-all rounded-xl shadow-xl hover:shadow-2xl uppercase tracking-widest hover:-translate-y-1 cursor-pointer'>
+            <button className='w-full sm:w-auto bg-black text-white px-12 py-4 text-xs sm:text-sm font-bold active:bg-gray-800 transition-all rounded-xl shadow-xl hover:shadow-2xl uppercase tracking-widest hover:-translate-y-1 cursor-pointer'
+              onClick={() => {
+                if (!size) {
+                  toast.error('Select Product Size');
+                  return;
+                }
+                addToCart(productData.id, size);
+                toast.success('Added to cart!');
+              }}>
               Add to Cart
             </button>
 
@@ -118,62 +130,8 @@ function Product() {
         </div>
 
         {/* Description & Review Section */}
-        <div className='mt-12 sm:mt-20'>
-          <div className='flex items-end'>
-            <button
-              onClick={() => setActiveTab('description')}
-              className={`px-6 py-4 text-sm font-bold border-t-2 border-l-2 border-r-2 rounded-t-xl transition-all duration-300 cursor-pointer ${activeTab === 'description'
-                ? 'border-black bg-white -mb-[2px] z-10'
-                : 'border-transparent bg-gray-50 text-gray-500 hover:text-black'
-                }`}
-            >
-              Description
-            </button>
-            <button
-              onClick={() => setActiveTab('reviews')}
-              className={`px-6 py-4 text-sm font-bold border-t-2 border-l-2 border-r-2 rounded-t-xl transition-all duration-300 cursor-pointer ${activeTab === 'reviews'
-                ? 'border-black bg-white -mb-[2px] z-10'
-                : 'border-transparent bg-gray-50 text-gray-500 hover:text-black'
-                }`}
-            >
-              Reviews (122)
-            </button>
-          </div>
-
-          <div className='flex flex-col gap-6 border-2 p-5 sm:p-10 text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose bg-white rounded-b-2xl rounded-tr-2xl shadow-sm min-h-[200px]'>
-            {activeTab === 'description' ? (
-              <>
-                <p>An e-commerce website is an online platform that facilitates the buying and selling of products or services over the internet. It serves as a virtual marketplace where businesses and individuals can showcase their products, interact with customers, and conduct transactions without the need for a physical presence. E-commerce websites have gained immense popularity due to their convenience, accessibility, and the global reach they offer.</p>
-                <p>E-commerce websites typically display products or services along with detailed descriptions, images, prices, and any available variations (e.g., sizes, colors). Each product usually has its own dedicated page with relevant information.</p>
-              </>
-            ) : (
-              <div className='flex flex-col gap-4'>
-                <p className='italic text-gray-400'>Customer Reviews (122)</p>
-                <div className='border-b pb-4'>
-                  <div className='flex gap-1 mb-1'>
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" loading='lazy' />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" loading='lazy' />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" loading='lazy' />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" loading='lazy' />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" loading='lazy' />
-                  </div>
-                  <p className='font-bold text-gray-800'>Quality is amazing!</p>
-                  <p className='text-xs'>Great fabric and perfect fit. Will buy again.</p>
-                </div>
-                <div className='border-b pb-4'>
-                  <div className='flex gap-1 mb-1'>
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" />
-                    <img src={assets.star_icon} alt="Star icon" className="w-3" />
-                    <img src={assets.star_dull_icon} alt="Star icon" className="w-3" />
-                  </div>
-                  <p className='font-bold text-gray-800'>Very comfortable</p>
-                  <p className='text-xs'>Soft material, feels very premium.</p>
-                </div>
-              </div>
-            )}
-          </div>
+        <div id="reviews-section">
+          <ProductDescriptionAndReviews activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
 
         {/* Related Products */}
