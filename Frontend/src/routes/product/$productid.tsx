@@ -15,7 +15,7 @@ function Product() {
   const { products, currency } = useContext(ShopContext)!;
   const [productData, setProductData] = useState<ProductType | null>(null);
   const [image, setImage] = useState('');
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState<string>(products[0].sizes[0]);
   const [activeTab, setActiveTab] = useState<'description' | 'reviews'>('description');
 
   const fetchProductData = async () => {

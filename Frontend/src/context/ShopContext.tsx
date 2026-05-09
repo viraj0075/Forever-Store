@@ -1,17 +1,6 @@
 import { createContext, useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
-
-interface ShopContextType {
-    products: typeof products;
-    currency: string;
-    delivery_fee: number;
-    showSearch: boolean;
-    setShowSearch: (showSearch: boolean) => void;
-    search: string;
-    setSearch: (search: string) => void;
-
-
-}
+import type { ShopContextType } from "../Types/ShopContextType";
 
 export const ShopContext = createContext<ShopContextType | null>(null);
 
