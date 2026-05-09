@@ -58,7 +58,7 @@ function Signup() {
           {/* Image Side */}
           <div className="hidden lg:block lg:w-1/2 relative bg-gray-50">
             <img src={assets.about_img} className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" alt="Signup Cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-12">
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex flex-col justify-end p-12">
               <h2 className="text-white text-3xl font-bold mb-3 tracking-wide">Join the Club.</h2>
               <p className="text-gray-200 text-sm leading-relaxed">Create an account to unlock exclusive member discounts, early access to new collections, and faster checkout.</p>
             </div>
