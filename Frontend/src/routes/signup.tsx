@@ -53,7 +53,7 @@ function Signup() {
   return (
     <div className="animate-fade-in py-2 sm:py-4">
       <ContainerLayout>
-        <div className="flex flex-row-reverse bg-white rounded-3xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.07)] overflow-hidden my-2 border border-gray-100 lg:min-h-[500px]">
+        <div className="flex flex-row-reverse bg-white rounded-3xl shadow-[0_20px_50px_rgba(8,112,184,0.07)] overflow-hidden my-2 border border-gray-100 lg:min-h-[500px]">
           
           {/* Image Side */}
           <div className="hidden lg:block lg:w-1/2 relative bg-gray-50">
