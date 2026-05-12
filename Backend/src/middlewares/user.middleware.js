@@ -1,5 +1,5 @@
 import Joi from "joi";
-import ApiError from "../utils/Apierror.js";
+import ApiError from "../utils/ApiError.js";
 
 const loginSchema = Joi.object({
     clerk_user_id: Joi.string().required().messages({

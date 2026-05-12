@@ -4,7 +4,9 @@ import cors from "cors"
 import { connectDB, disconnectDB } from "./config/db.js";
 import { connectCloudinary } from "./config/cloudinary.js";
 import userRoutes from "./routes/user.routes.js"
-import ApiError from "./utils/Apierror.js";
+import productRoutes from "./routes/product.routes.js"
+import ApiError from "./utils/ApiError.js";
+
 
 
 // server port 
@@ -30,6 +32,7 @@ app.use(cors({
 
 // Routes
 app.use("/user", userRoutes)
+app.use("/product", productRoutes)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

@@ -1,6 +1,6 @@
 import { prisma } from "../config/db.js";
-import ApiError from "../utils/Apierror.js"
-import ApiResponse from "../utils/Apiresponse.js"
+import ApiError from "../utils/ApiError.js"
+import ApiResponse from "../utils/ApiResponse.js"
 
 export const LoginUser = async (req, res) => {
     try {
