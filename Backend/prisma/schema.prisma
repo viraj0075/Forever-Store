@@ -7,8 +7,8 @@ datasource db {
   provider = "postgresql"
 }
 
-model Product {
-  id          Int      @id @default(autoincrement())
+model products {
+  id          String   @id @default(uuid())
   name        String   @unique
   description String
   price       Decimal  @default(0)
@@ -23,11 +23,11 @@ model Product {
   updatedAt   DateTime @updatedAt
 }
 
-model user {
-  user_id       Int      @id @default(autoincrement())
+model users {
+  user_id       String   @id @default(uuid())
   clerk_user_id String   @unique
-  name          String
-  email         String   @unique
+  email         String?  @unique
+  name          String?
   avatar        String?
   cartData      Json?
   createdAt     DateTime @default(now())

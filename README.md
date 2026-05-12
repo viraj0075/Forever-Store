@@ -3,15 +3,25 @@
 ## Setup Instructions
 
 ### 1. Frontend Setup
+The frontend is a modern web application built with **React**, **Vite**, **TypeScript**, **Tailwind CSS**, and **TanStack (Router & Query)**.
+
 1. Navigate to the frontend directory:
    ```bash
    cd Frontend
    ```
-2. Install the dependencies:
+
+2. Install the project dependencies:
    ```bash
    npm install
    ```
-3. Start the development server:
+
+3. (Optional) Run the TypeScript compiler to check for any type errors:
+   ```bash
+   npx tsc --noEmit
+   # Or build the project: npm run build
+   ```
+
+4. Start the Vite development server:
    ```bash
    npm run dev
    ```

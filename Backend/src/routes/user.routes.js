@@ -1,8 +1,9 @@
 import express from "express"
-import { LoginUser } from "../controllers/user.controllers.js"
-import { validateLogin } from "../middlewares/validate.middleware.js"
+import { LoginUser, registerUser } from "../controllers/user.controllers.js"
+import { validateLogin, validateSignIn } from "../middlewares/user.middleware.js"
 
 const router = express.Router();
 
 router.post("/login", validateLogin, LoginUser);
-export default router;
+router.post("/signin", validateSignIn, registerUser);
+export default router;
