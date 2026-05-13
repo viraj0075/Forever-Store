@@ -5,8 +5,8 @@ import { connectDB, disconnectDB } from "./config/db.js";
 import { connectCloudinary } from "./config/cloudinary.js";
 import userRoutes from "./routes/user.routes.js"
 import productRoutes from "./routes/product.routes.js"
+import cartRoutes from "./routes/cart.routes.js"
 import ApiError from "./utils/ApiError.js";
-
 
 
 // server port 
@@ -33,6 +33,7 @@ app.use(cors({
 // Routes
 app.use("/user", userRoutes)
 app.use("/product", productRoutes)
+app.use("/cart", cartRoutes)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

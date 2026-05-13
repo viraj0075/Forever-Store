@@ -22,8 +22,7 @@ model products {
 }
 
 model users {
-  user_id       String   @id @default(uuid())
-  clerk_user_id String   @unique
+  clerk_user_id String   @unique @id
   email         String?  @unique
   name          String?
   avatar        String?
