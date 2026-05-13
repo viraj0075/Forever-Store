@@ -127,11 +127,6 @@ export const updateCartData = async (req, res) => {
     try {
         const { clerkId, itemId, size, quantity } = req.body;
 
-        // quantity can be:
-        //  1  -> increase by 1
-        // -1  -> decrease by 1
-        //  0  -> remove item completely
-
         const user = await prisma.users.findUnique({
             where: {
                 clerk_user_id: clerkId,
