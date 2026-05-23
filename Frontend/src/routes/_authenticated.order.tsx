@@ -4,7 +4,7 @@ import { ShopContext } from '../context/ShopContext'
 import ContainerLayout from '../layouts/ContainerLayout'
 import Title from '../components/Title'
 
-export const Route = createFileRoute('/order')({
+export const Route = createFileRoute('/_authenticated/order')({
   component: Order,
 })
 

@@ -10,18 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as PlaceOrderRouteImport } from './routes/place-order'
-import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as YoutubeIndexRouteImport } from './routes/youtube/index'
 import { Route as ProductIndexRouteImport } from './routes/product/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as ProductProductidRouteImport } from './routes/product/$productid'
 import { Route as PostsPostidRouteImport } from './routes/posts/$postid'
+import { Route as AuthenticatedPlaceOrderRouteImport } from './routes/_authenticated.place-order'
+import { Route as AuthenticatedOrderRouteImport } from './routes/_authenticated.order'
 import { Route as YoutubeProfileRouteRouteImport } from './routes/youtube/profile/route'
 import { Route as YoutubeProfileIndexRouteImport } from './routes/youtube/profile/index'
 import { Route as YoutubeProfileVirajRouteImport } from './routes/youtube/profile/viraj'
@@ -29,16 +30,6 @@ import { Route as YoutubeProfileVirajRouteImport } from './routes/youtube/profil
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlaceOrderRoute = PlaceOrderRouteImport.update({
-  id: '/place-order',
-  path: '/place-order',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrderRoute = OrderRouteImport.update({
-  id: '/order',
-  path: '/order',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -59,6 +50,10 @@ const CartRoute = CartRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -91,6 +86,16 @@ const PostsPostidRoute = PostsPostidRouteImport.update({
   path: '/posts/$postid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedPlaceOrderRoute = AuthenticatedPlaceOrderRouteImport.update({
+  id: '/place-order',
+  path: '/place-order',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedOrderRoute = AuthenticatedOrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const YoutubeProfileRouteRoute = YoutubeProfileRouteRouteImport.update({
   id: '/youtube/profile',
   path: '/youtube/profile',
@@ -113,10 +118,10 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
+  '/order': typeof AuthenticatedOrderRoute
+  '/place-order': typeof AuthenticatedPlaceOrderRoute
   '/posts/$postid': typeof PostsPostidRoute
   '/product/$productid': typeof ProductProductidRoute
   '/posts/': typeof PostsIndexRoute
@@ -131,9 +136,9 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
+  '/order': typeof AuthenticatedOrderRoute
+  '/place-order': typeof AuthenticatedPlaceOrderRoute
   '/posts/$postid': typeof PostsPostidRoute
   '/product/$productid': typeof ProductProductidRoute
   '/posts': typeof PostsIndexRoute
@@ -145,14 +150,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/place-order': typeof PlaceOrderRoute
   '/signup': typeof SignupRoute
   '/youtube/profile': typeof YoutubeProfileRouteRouteWithChildren
+  '/_authenticated/order': typeof AuthenticatedOrderRoute
+  '/_authenticated/place-order': typeof AuthenticatedPlaceOrderRoute
   '/posts/$postid': typeof PostsPostidRoute
   '/product/$productid': typeof ProductProductidRoute
   '/posts/': typeof PostsIndexRoute
@@ -169,10 +175,10 @@ export interface FileRouteTypes {
     | '/cart'
     | '/contact'
     | '/login'
-    | '/order'
-    | '/place-order'
     | '/signup'
     | '/youtube/profile'
+    | '/order'
+    | '/place-order'
     | '/posts/$postid'
     | '/product/$productid'
     | '/posts/'
@@ -187,9 +193,9 @@ export interface FileRouteTypes {
     | '/cart'
     | '/contact'
     | '/login'
+    | '/signup'
     | '/order'
     | '/place-order'
-    | '/signup'
     | '/posts/$postid'
     | '/product/$productid'
     | '/posts'
@@ -200,14 +206,15 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/cart'
     | '/contact'
     | '/login'
-    | '/order'
-    | '/place-order'
     | '/signup'
     | '/youtube/profile'
+    | '/_authenticated/order'
+    | '/_authenticated/place-order'
     | '/posts/$postid'
     | '/product/$productid'
     | '/posts/'
@@ -219,12 +226,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutRoute: typeof AboutRoute
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
-  OrderRoute: typeof OrderRoute
-  PlaceOrderRoute: typeof PlaceOrderRoute
   SignupRoute: typeof SignupRoute
   YoutubeProfileRouteRoute: typeof YoutubeProfileRouteRouteWithChildren
   PostsPostidRoute: typeof PostsPostidRoute
@@ -241,20 +247,6 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/place-order': {
-      id: '/place-order'
-      path: '/place-order'
-      fullPath: '/place-order'
-      preLoaderRoute: typeof PlaceOrderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order': {
-      id: '/order'
-      path: '/order'
-      fullPath: '/order'
-      preLoaderRoute: typeof OrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -283,6 +275,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -327,6 +326,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/place-order': {
+      id: '/_authenticated/place-order'
+      path: '/place-order'
+      fullPath: '/place-order'
+      preLoaderRoute: typeof AuthenticatedPlaceOrderRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/order': {
+      id: '/_authenticated/order'
+      path: '/order'
+      fullPath: '/order'
+      preLoaderRoute: typeof AuthenticatedOrderRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/youtube/profile': {
       id: '/youtube/profile'
       path: '/youtube/profile'
@@ -351,6 +364,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedOrderRoute: typeof AuthenticatedOrderRoute
+  AuthenticatedPlaceOrderRoute: typeof AuthenticatedPlaceOrderRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedOrderRoute: AuthenticatedOrderRoute,
+  AuthenticatedPlaceOrderRoute: AuthenticatedPlaceOrderRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 interface YoutubeProfileRouteRouteChildren {
   YoutubeProfileVirajRoute: typeof YoutubeProfileVirajRoute
   YoutubeProfileIndexRoute: typeof YoutubeProfileIndexRoute
@@ -366,12 +393,11 @@ const YoutubeProfileRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRoute,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
   LoginRoute: LoginRoute,
-  OrderRoute: OrderRoute,
-  PlaceOrderRoute: PlaceOrderRoute,
   SignupRoute: SignupRoute,
   YoutubeProfileRouteRoute: YoutubeProfileRouteRouteWithChildren,
   PostsPostidRoute: PostsPostidRoute,

@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../layouts/ContainerLayout";
 import { assets } from "../assets/frontend_assets/assets";
@@ -100,40 +101,47 @@ export default function Navbar() {
                         </button>
 
                         {/* Profile */}
-                        <div className="group relative z-40">
-                            <button
-                                onClick={() => setShowSearch(false)}
-                                onMouseEnter={() => setShowSearch(false)}
-                                className="cursor-pointer rounded-full p-1 transition-colors hover:bg-gray-200"
-                            >
-                                <img
-                                    src={assets.profile_icon}
-                                    className="w-5"
-                                    alt="Profile"
+                        <div className="flex items-center">
+                            <SignedIn>
+                                <UserButton
+                                    appearance={{
+                                        elements: {
+                                            avatarBox:
+                                                "w-8 h-8 rounded-full border border-gray-200"
+                                        },
+                                    }}
                                 />
-                            </button>
-
-                            <div className="invisible absolute right-0 top-full pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100">
-                                <div className="flex w-44 flex-col gap-1 overflow-hidden rounded-xl border border-gray-100 bg-white px-2 py-3 text-gray-600 shadow-2xl">
+                            </SignedIn>
+                            <SignedOut>
+                                <div className="group relative z-40">
                                     <Link
                                         to="/login"
-                                        className="rounded-lg px-4 py-2 transition-colors hover:bg-gray-50 hover:text-black"
+                                        className="cursor-pointer rounded-full p-1 transition-colors hover:bg-gray-200 block"
                                     >
-                                        My Profile
+                                        <img
+                                            src={assets.profile_icon}
+                                            className="w-5"
+                                            alt="Profile"
+                                        />
                                     </Link>
-
-                                    <Link
-                                        to="/order"
-                                        className="rounded-lg px-4 py-2 transition-colors hover:bg-gray-50 hover:text-black"
-                                    >
-                                        Orders
-                                    </Link>
-
-                                    <button className="rounded-lg px-4 py-2 text-left transition-colors hover:bg-gray-50 hover:text-black">
-                                        Logout
-                                    </button>
+                                    <div className="invisible absolute right-0 top-full pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                                        <div className="flex w-36 flex-col gap-1 overflow-hidden rounded-xl border border-gray-100 bg-white px-2 py-3 text-gray-600 shadow-2xl">
+                                            <Link
+                                                to="/login"
+                                                className="rounded-lg px-4 py-2 transition-colors hover:bg-gray-50 hover:text-black text-sm"
+                                            >
+                                                Log In
+                                            </Link>
+                                            <Link
+                                                to="/signup"
+                                                className="rounded-lg px-4 py-2 transition-colors hover:bg-gray-50 hover:text-black text-sm font-bold"
+                                            >
+                                                Sign Up
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </SignedOut>
                         </div>
 
                         {/* Cart */}
@@ -269,22 +277,24 @@ export default function Navbar() {
                         </div>
 
                         {/* Footer */}
-                        <div className="mt-auto bg-white p-6">
-                            <Link
-                                to="/signup"
-                                onClick={() => setMenuOpen(false)}
-                                className="mb-3 block w-full rounded-xl bg-black py-3 text-center text-sm font-bold text-white transition-colors hover:bg-gray-800"
-                            >
-                                Create Account
-                            </Link>
+                        <div className="mt-auto bg-white p-6 border-t border-gray-100">
+                            <SignedOut>
+                                <Link
+                                    to="/signup"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="mb-3 block w-full rounded-xl bg-black py-3 text-center text-sm font-bold text-white transition-colors hover:bg-gray-800"
+                                >
+                                    Create Account
+                                </Link>
 
-                            <Link
-                                to="/login"
-                                onClick={() => setMenuOpen(false)}
-                                className="block w-full rounded-xl border-2 border-gray-200 py-3 text-center text-sm font-bold text-gray-700 transition-colors hover:bg-gray-50"
-                            >
-                                Log In
-                            </Link>
+                                <Link
+                                    to="/login"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="block w-full rounded-xl border-2 border-gray-200 py-3 text-center text-sm font-bold text-gray-700 transition-colors hover:bg-gray-50"
+                                >
+                                    Log In
+                                </Link>
+                            </SignedOut>
                         </div>
                     </div>
                 </div>

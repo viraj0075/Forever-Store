@@ -1,120 +1,86 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { createFileRoute } from '@tanstack/react-router'
 import ContainerLayout from '../layouts/ContainerLayout'
-import Title from '../components/Title'
-import InputField from '../components/InputField'
-import toast from 'react-hot-toast'
-import { assets } from '../assets/frontend_assets/assets'
+import { SignUp, useAuth } from '@clerk/clerk-react'
+import Skeleton from 'react-loading-skeleton'
 
 export const Route = createFileRoute('/signup')({
   component: Signup,
 })
 
 function Signup() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid";
-    
-    if (!formData.password.trim()) newErrors.password = "Password is required";
-    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const onSubmitHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    // Simulate signup
-    toast.success("Account created successfully!");
-    navigate({ to: '/' });
-  };
+  const { isLoaded } = useAuth()
 
   return (
-    <div className="animate-fade-in py-2 sm:py-4">
+    <div className="animate-fade-in py-8 sm:py-12">
       <ContainerLayout>
-        <div className="flex flex-row-reverse bg-white rounded-3xl shadow-[0_20px_50px_rgba(8,112,184,0.07)] overflow-hidden my-2 border border-gray-100 lg:min-h-[500px]">
-          
-          {/* Image Side */}
-          <div className="hidden lg:block lg:w-1/2 relative bg-gray-50">
-            <img src={assets.about_img} className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" alt="Signup Cover" />
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex flex-col justify-end p-12">
-              <h2 className="text-white text-3xl font-bold mb-3 tracking-wide">Join the Club.</h2>
-              <p className="text-gray-200 text-sm leading-relaxed">Create an account to unlock exclusive member discounts, early access to new collections, and faster checkout.</p>
-            </div>
-          </div>
-
-          {/* Form Side */}
-          <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
-            <div className="mb-6 text-center lg:text-left">
-              <div className="text-3xl sm:text-4xl mb-2 inline-block">
-                <Title text1={'SIGN'} text2={'UP'} />
-              </div>
-              <p className="text-gray-500 text-sm">Fill in your details to create an account.</p>
-            </div>
-            
-            <form onSubmit={onSubmitHandler} noValidate className="flex flex-col gap-4">
-              <InputField 
-                name="name" 
-                type="text"
-                value={formData.name} 
-                onChange={onChangeHandler} 
-                placeholder="Full Name" 
-                error={errors.name} 
-                autoComplete="name"
-              />
-              <InputField 
-                name="email" 
-                type="email"
-                value={formData.email} 
-                onChange={onChangeHandler} 
-                placeholder="Email address" 
-                error={errors.email} 
-                autoComplete="email"
-              />
-              <InputField 
-                name="password" 
-                type="password"
-                value={formData.password} 
-                onChange={onChangeHandler} 
-                placeholder="Password" 
-                error={errors.password} 
-                autoComplete="new-password"
-              />
-              
-              <div className="flex justify-between items-center text-sm mt-2">
-                <p className="text-gray-500">Already have an account?</p>
-                <Link to="/login" className="font-bold text-gray-800 hover:text-black transition-colors border-b border-gray-800 pb-0.5">Login Here</Link>
+        <div className="flex justify-center items-center py-8">
+          {!isLoaded ? (
+            <div className="w-full max-w-[440px] border border-gray-100 bg-white p-6 sm:p-8 shadow-[0_20px_50px_rgba(8,_112,_184,_0.05)] rounded-3xl flex flex-col gap-6">
+              {/* Brand Logo & Header Skeleton */}
+              <div className="flex flex-col gap-3">
+                <Skeleton height={28} width="60%" className="rounded-lg" />
+                <Skeleton height={16} width="85%" className="rounded-md" />
               </div>
 
-              <button type="submit" className="mt-6 w-full bg-black text-white font-bold tracking-widest uppercase py-3.5 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all active:scale-95 cursor-pointer">
-                Create Account
-              </button>
-            </form>
-          </div>
+              {/* Social Buttons Skeleton */}
+              <div className="flex flex-col gap-3 mt-2">
+                <Skeleton height={42} className="rounded-xl" />
+              </div>
 
+              {/* Divider */}
+              <div className="flex items-center gap-4 my-2">
+                <div className="flex-1 h-[1px] bg-gray-100"></div>
+                <span className="text-[10px] uppercase font-bold text-gray-300 tracking-wider">or</span>
+                <div className="flex-1 h-[1px] bg-gray-100"></div>
+              </div>
+
+              {/* Input Form Fields */}
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <div className="flex-1 flex flex-col gap-1.5">
+                    <Skeleton height={14} width="50%" className="rounded-md" />
+                    <Skeleton height={40} className="rounded-xl" />
+                  </div>
+                  <div className="flex-1 flex flex-col gap-1.5">
+                    <Skeleton height={14} width="50%" className="rounded-md" />
+                    <Skeleton height={40} className="rounded-xl" />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Skeleton height={14} width="30%" className="rounded-md" />
+                  <Skeleton height={40} className="rounded-xl" />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Skeleton height={14} width="35%" className="rounded-md" />
+                  <Skeleton height={40} className="rounded-xl" />
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <Skeleton height={46} className="rounded-xl mt-2" />
+
+              {/* Footer */}
+              <div className="flex justify-center mt-2">
+                <Skeleton height={16} width="55%" className="rounded-md" />
+              </div>
+            </div>
+          ) : (
+            <SignUp 
+              signInUrl="/login" 
+              fallbackRedirectUrl="/"
+              appearance={{
+                elements: {
+                  card: "shadow-[0_20px_50px_rgba(8,_112,_184,_0.05)] border border-gray-100 rounded-3xl p-4 sm:p-6",
+                  headerTitle: "text-2xl font-black text-gray-800 tracking-wide",
+                  formButtonPrimary: "bg-black hover:bg-gray-800 text-sm font-bold uppercase tracking-widest text-white py-3.5 rounded-xl shadow-lg active:scale-95 transition-all cursor-pointer",
+                  footerActionLink: "font-bold text-gray-800 hover:text-black transition-colors"
+                }
+              }}
+            />
+          )}
         </div>
       </ContainerLayout>
     </div>
   )
 }
+

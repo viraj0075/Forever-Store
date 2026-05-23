@@ -7,10 +7,17 @@ import "./index.css";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import ShopContextProvider from "./context/ShopContext";
+import { ClerkProvider, useAuth } from "@clerk/clerk-react";
 
 const queryClient = new QueryClient();
 
-const router = createRouter({ routeTree });
+// Create the router with an initial context placeholder
+const router = createRouter({
+  routeTree,
+  context: {
+    auth: undefined!,
+  },
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -18,13 +25,21 @@ declare module "@tanstack/react-router" {
   }
 }
 
+function InnerApp() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ShopContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ShopContextProvider>
+    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || ""}>
+      <ShopContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <InnerApp />
+        </QueryClientProvider>
+      </ShopContextProvider>
+    </ClerkProvider>
   </StrictMode>
 );
+
 

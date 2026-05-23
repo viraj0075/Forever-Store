@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import InputField from '../components/InputField'
 import CartTotalsAndPayment from '../components/CartTotalsAndPayment'
 
-export const Route = createFileRoute('/place-order')({
+export const Route = createFileRoute('/_authenticated/place-order')({
   component: PlaceOrder,
 })
 
