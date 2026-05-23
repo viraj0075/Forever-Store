@@ -2,7 +2,7 @@ import React from "react";
 import ContainerLayout from "../layouts/ContainerLayout";
 
 const Subscribe = () => {
-  const onSubmitHandler = (event: React.FormEvent) => {
+  const onSubmitHandler = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
