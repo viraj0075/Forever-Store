@@ -6,6 +6,7 @@ import { connectCloudinary } from "./config/cloudinary.js";
 import userRoutes from "./routes/user.routes.js"
 import productRoutes from "./routes/product.routes.js"
 import cartRoutes from "./routes/cart.routes.js"
+import orderRoutes from "./routes/order.routes.js";
 import ApiError from "./utils/ApiError.js";
 
 
@@ -15,8 +16,6 @@ if (!process.env.PORT) {
     throw new ApiError(400, "PORT is not defined")
 }
 const port = process.env.PORT;
-
-
 
 
 // Database connection
@@ -34,6 +33,7 @@ app.use(cors({
 app.use("/user", userRoutes)
 app.use("/product", productRoutes)
 app.use("/cart", cartRoutes)
+app.use("/order", orderRoutes)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
